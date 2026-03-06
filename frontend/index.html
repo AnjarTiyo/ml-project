@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Clustering UMKM Semarang - Machine Learning</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-logo">
+                <img src="logo.png" alt="Logo UPGRIS" class="logo-upgris">
+                <div>
+                    <h1>Sistem Clustering UMKM Semarang</h1>
+                </div>
+            </div>
+            <p class="subtitle">Analisis Pengelompokan UMKM menggunakan Fuzzy C-Means Clustering</p>
+            <p class="university">Universitas PGRI Semarang</p>
+            <p class="subtitle">Aprizal Prima Putra - (23676002)</p>
+        </div>
+
+        <div class="main-content">
+            <!-- Input Form -->
+            <div class="card">
+                <h2>Input Data UMKM</h2>
+                <form id="umkmForm">
+                    <div class="form-group">
+                        <label for="modal">Modal Usaha</label>
+                        <input type="text" id="modal" placeholder="50.000.000" required class="rupiah-input">
+                        <div class="input-hint">Modal awal atau modal kerja UMKM</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="omset">Omset per Bulan</label>
+                        <input type="text" id="omset" placeholder="25.000.000" required class="rupiah-input">
+                        <div class="input-hint">Pendapatan kotor rata-rata per bulan</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="aset">Total Aset</label>
+                        <input type="text" id="aset" placeholder="75.000.000" required class="rupiah-input">
+                        <div class="input-hint">Nilai total aset yang dimiliki</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="laba">Laba Bersih per Bulan</label>
+                        <input type="text" id="laba" placeholder="5.000.000" required class="rupiah-input">
+                        <div class="input-hint">Keuntungan bersih setelah dikurangi biaya</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="karyawan">Total Karyawan</label>
+                        <input type="number" id="karyawan" placeholder="10" required>
+                        <div class="input-hint">Jumlah karyawan/pegawai</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lama">Lama Usaha (Tahun)</label>
+                        <input type="number" id="lama" placeholder="5" required>
+                        <div class="input-hint">Berapa lama usaha telah beroperasi</div>
+                    </div>
+
+                    <button type="submit" class="btn-predict" id="btnPredict">
+                        Analisis Cluster UMKM
+                    </button>
+                </form>
+
+                <div class="example-data">
+                    <h4>Data Contoh untuk Testing:</h4>
+                    <div class="example-buttons">
+                        <button class="btn-example" onclick="fillExample('small')">UMKM Kecil</button>
+                        <button class="btn-example" onclick="fillExample('medium')">UMKM Menengah</button>
+                        <button class="btn-example" onclick="fillExample('large')">UMKM Besar</button>
+                    </div>
+                </div>
+
+                <div class="error-message" id="errorMessage"></div>
+            </div>
+
+            <!-- Result Section -->
+            <div class="card">
+                <h2>Hasil Analisis</h2>
+                
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p style="margin-top: 15px; color: #667eea; font-weight: 600;">Menganalisis data...</p>
+                </div>
+
+                <div class="result-section" id="resultSection">
+                    <div style="text-align: center;">
+                        <p style="color: #999; margin: 50px 0; font-size: 0.9em;">
+                            Silakan input data UMKM dan klik "Analisis Cluster UMKM" untuk melihat hasil
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2026 Sistem Clustering UMKM Semarang | Aprizal Prima Putra</p>
+            <p class="university">Universitas PGRI Semarang</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
