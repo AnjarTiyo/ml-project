@@ -1,4 +1,22 @@
 // Format angka ke Rupiah dengan titik sebagai separator
+const API_BASE = `http://${window.location.hostname || '127.0.0.1'}:8000`;
+
+// Fallback classification (mirrors backend rule — used when API is unreachable)
+function classifyFallback(data) {
+    const omsetThn = data.Omset * 12;
+    let cluster;
+    if (data.Aset <= 1_000_000_000 && omsetThn <= 2_000_000_000) {
+        cluster = 0; // Usaha Mikro
+    } else if (data.Aset <= 5_000_000_000 && omsetThn <= 15_000_000_000) {
+        cluster = 1; // Usaha Kecil
+    } else {
+        cluster = 2; // Usaha Menengah
+    }
+    const membership = [0.0, 0.0, 0.0];
+    membership[cluster] = 1.0;
+    return { cluster, category: ["Usaha Mikro","Usaha Kecil","Usaha Menengah"][cluster], membership };
+}
+
 function formatRupiahInput(angka) {
     const numberString = angka.replace(/[^,\d]/g, '').toString();
     const split = numberString.split(',');
@@ -252,7 +270,7 @@ document.getElementById('umkmForm').addEventListener('submit', async function(e)
     document.getElementById('btnPredict').disabled = true;
 
     try {
-        const response = await fetch('http://127.0.0.1:8000/predict', {
+        const response = await fetch(`${API_BASE}/predict`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -273,9 +291,11 @@ document.getElementById('umkmForm').addEventListener('submit', async function(e)
         displayResult(result, data);
 
     } catch (error) {
-        console.error('Error:', error);
+        console.warn('Backend tidak tersedia, menggunakan klasifikasi lokal:', error);
         document.getElementById('loading').classList.remove('show');
-        document.getElementById('errorMessage').textContent = '❌ Terjadi kesalahan! Pastikan backend server berjalan di http://127.0.0.1:8000';
+        const fallback = classifyFallback(data);
+        displayResult(fallback, data);
+        document.getElementById('errorMessage').textContent = '⚠️ Backend tidak terhubung — hasil menggunakan klasifikasi lokal (UU 20/2008).';
         document.getElementById('errorMessage').classList.add('show');
     } finally {
         document.getElementById('btnPredict').disabled = false;
