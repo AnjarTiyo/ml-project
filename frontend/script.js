@@ -66,8 +66,23 @@ const exampleData = {
 };
 
 // Interpretasi cluster
+// Cluster 0 = Besar (Modal ~165M, Omset ~1.3B, Karyawan ~8)
+// Cluster 1 = Kecil  (Modal ~6.8M, Omset ~51M,  Karyawan ~2)
+// Cluster 2 = Menengah (Modal ~11.7M, Omset ~108M, Karyawan ~2, Lama ~23)
 const clusterInfo = {
     0: {
+        name: "UMKM Skala Besar",
+        description: "UMKM dengan skala usaha besar yang sudah mapan dan berkembang pesat.",
+        characteristics: [
+            "Modal dan aset besar",
+            "Omset dan laba bersih tinggi",
+            "Jumlah karyawan banyak (>20 orang)",
+            "Usia usaha sudah matang dan berpengalaman",
+            "Memiliki sistem manajemen yang solid"
+        ],
+        recommendation: "Dapat berekspansi ke pasar yang lebih luas, mengembangkan inovasi produk, dan menjadi mentor bagi UMKM lainnya."
+    },
+    1: {
         name: "UMKM Skala Kecil",
         description: "UMKM dengan skala usaha kecil yang masih dalam tahap pengembangan.",
         characteristics: [
@@ -79,7 +94,7 @@ const clusterInfo = {
         ],
         recommendation: "Disarankan untuk mendapatkan bantuan modal, pelatihan manajemen, dan akses pasar untuk pengembangan usaha."
     },
-    1: {
+    2: {
         name: "UMKM Skala Menengah",
         description: "UMKM dengan skala usaha menengah yang sudah cukup stabil dan berkembang.",
         characteristics: [
@@ -90,18 +105,6 @@ const clusterInfo = {
             "Memiliki sistem operasional yang baik"
         ],
         recommendation: "Fokus pada ekspansi pasar, diversifikasi produk, dan peningkatan efisiensi operasional."
-    },
-    2: {
-        name: "UMKM Skala Besar",
-        description: "UMKM dengan skala usaha besar yang sudah mapan dan berkembang pesat.",
-        characteristics: [
-            "Modal dan aset besar",
-            "Omset dan laba bersih tinggi",
-            "Jumlah karyawan banyak (>20 orang)",
-            "Usia usaha sudah matang dan berpengalaman",
-            "Memiliki sistem manajemen yang solid"
-        ],
-        recommendation: "Dapat berekspansi ke pasar yang lebih luas, mengembangkan inovasi produk, dan menjadi mentor bagi UMKM lainnya."
     }
 };
 

@@ -1,4 +1,5 @@
 import json
+import logging
 import joblib
 import numpy as np
 import skfuzzy as fuzz
@@ -7,19 +8,30 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+)
+logger = logging.getLogger(__name__)
+
 # ===============================
 # LOAD MODEL
 # ===============================
 
 scaler = joblib.load("../model/scaler.pkl")
+logger.debug("scaler loaded: %s", scaler)
 pca = joblib.load("../model/pca.pkl")
+logger.debug("pca loaded: %s", pca)
 centers = np.load("../model/centers.npy")
+logger.debug("centers shape: %s", centers.shape)
 
 with open("../model/config.json") as f:
     config = json.load(f)
+logger.debug("config: %s", config)
 
 features = config["features"]
 m = config["m"]
+logger.debug("features: %s, m: %s", features, m)
 
 # ===============================
 # FASTAPI INIT
@@ -62,8 +74,10 @@ def predict_cluster(data):
         data["Total Karyawan"],
         data["Lama Usaha"],
     ]
+    logger.debug("raw input vector: %s", x)
 
     x_scaled = scaler.transform([x])
+    logger.debug("scaled input: %s", x_scaled)
     
     # Use scaled data directly (not PCA) as centers have 6 features
     u, _, _, _, _, _ = fuzz.cluster.cmeans_predict(
@@ -73,8 +87,10 @@ def predict_cluster(data):
         error=0.005,
         maxiter=1000
     )
+    logger.debug("membership matrix u: %s", u)
 
     cluster = int(np.argmax(u))
+    logger.debug("predicted cluster: %d", cluster)
 
     return {
         "cluster": cluster,
@@ -92,6 +108,7 @@ def root():
 
 @app.post("/predict")
 def predict(data: UMKMData):
+    logger.debug("received /predict request: %s", data)
 
     input_data = {
         "Modal": data.Modal,
@@ -103,5 +120,6 @@ def predict(data: UMKMData):
     }
 
     result = predict_cluster(input_data)
+    logger.debug("predict result: %s", result)
 
     return result
