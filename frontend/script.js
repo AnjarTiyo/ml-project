@@ -37,74 +37,77 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Data contoh untuk testing
+// Data contoh untuk testing (UU 20/2008)
 const exampleData = {
     small: {
-        Modal: 10000000,
-        Omset: 5000000,
-        Aset: 15000000,
-        Laba_Bersih: 1000000,
+        // Usaha Mikro: aset ≤ 1M, omset ≤ 2M/thn
+        Modal: 50000000,
+        Omset: 8333333,       // ~100 jt/thn
+        Aset: 60000000,
+        Laba_Bersih: 2000000,
         Total_Karyawan: 3,
-        Lama_Usaha: 2
+        Lama_Usaha: 3
     },
     medium: {
-        Modal: 50000000,
-        Omset: 25000000,
-        Aset: 75000000,
-        Laba_Bersih: 5000000,
-        Total_Karyawan: 10,
-        Lama_Usaha: 5
+        // Usaha Kecil: aset ≤ 5M, omset ≤ 15M/thn
+        Modal: 3000000000,
+        Omset: 583333333,     // ~7 M/thn
+        Aset: 3200000000,
+        Laba_Bersih: 100000000,
+        Total_Karyawan: 12,
+        Lama_Usaha: 6
     },
     large: {
-        Modal: 200000000,
-        Omset: 100000000,
-        Aset: 300000000,
-        Laba_Bersih: 20000000,
-        Total_Karyawan: 50,
+        // Usaha Menengah: aset ≤ 10M, omset ≤ 50M/thn
+        Modal: 7500000000,
+        Omset: 2500000000,    // ~30 M/thn
+        Aset: 8000000000,
+        Laba_Bersih: 500000000,
+        Total_Karyawan: 55,
         Lama_Usaha: 10
     }
 };
 
-// Interpretasi cluster
-// Cluster 0 = Besar (Modal ~165M, Omset ~1.3B, Karyawan ~8)
-// Cluster 1 = Kecil  (Modal ~6.8M, Omset ~51M,  Karyawan ~2)
-// Cluster 2 = Menengah (Modal ~11.7M, Omset ~108M, Karyawan ~2, Lama ~23)
+// Interpretasi cluster — UU 20/2008
+// Cluster 0 = Usaha Mikro  (aset ≤ 1M, omset ≤ 2M/thn)
+// Cluster 1 = Usaha Kecil  (aset ≤ 5M, omset ≤ 15M/thn)
+// Cluster 2 = Usaha Menengah (aset ≤ 10M, omset ≤ 50M/thn)
 const clusterInfo = {
     0: {
-        name: "UMKM Skala Besar",
-        description: "UMKM dengan skala usaha besar yang sudah mapan dan berkembang pesat.",
+        name: "Usaha Mikro",
+        description: "Usaha produktif milik perorangan atau badan usaha dengan skala terkecil (UU 20/2008).",
         characteristics: [
-            "Modal dan aset besar",
-            "Omset dan laba bersih tinggi",
-            "Jumlah karyawan banyak (>20 orang)",
-            "Usia usaha sudah matang dan berpengalaman",
-            "Memiliki sistem manajemen yang solid"
+            "Aset ≤ Rp1 miliar (di luar tanah & bangunan)",
+            "Omzet ≤ Rp2 miliar per tahun",
+            "Jumlah karyawan 1–4 orang",
+            "Biasanya usaha individu atau keluarga",
+            "Contoh: warung kecil, pedagang kaki lima"
         ],
-        recommendation: "Dapat berekspansi ke pasar yang lebih luas, mengembangkan inovasi produk, dan menjadi mentor bagi UMKM lainnya."
+        recommendation: "Disarankan mendapatkan bantuan modal (KUR Mikro), pelatihan manajemen dasar, dan akses digitalisasi usaha."
     },
     1: {
-        name: "UMKM Skala Kecil",
-        description: "UMKM dengan skala usaha kecil yang masih dalam tahap pengembangan.",
+        name: "Usaha Kecil",
+        description: "Usaha ekonomi produktif yang berdiri sendiri dengan skala lebih besar dari usaha mikro (UU 20/2008).",
         characteristics: [
-            "Modal dan aset relatif kecil",
-            "Omset dan laba bersih masih terbatas",
-            "Jumlah karyawan sedikit (1-5 orang)",
-            "Usia usaha relatif baru atau menengah",
-            "Potensi pertumbuhan tinggi dengan dukungan yang tepat"
+            "Aset > Rp1 miliar s.d. Rp5 miliar",
+            "Omzet > Rp2 miliar s.d. Rp15 miliar per tahun",
+            "Jumlah karyawan 5–19 orang",
+            "Sudah memiliki pembukuan sederhana",
+            "Contoh: restoran kecil, konveksi"
         ],
-        recommendation: "Disarankan untuk mendapatkan bantuan modal, pelatihan manajemen, dan akses pasar untuk pengembangan usaha."
+        recommendation: "Fokus pada formalisasi usaha, akses KUR Kecil, sertifikasi produk, dan pengembangan SDM."
     },
     2: {
-        name: "UMKM Skala Menengah",
-        description: "UMKM dengan skala usaha menengah yang sudah cukup stabil dan berkembang.",
+        name: "Usaha Menengah",
+        description: "Usaha ekonomi produktif yang berdiri sendiri dengan kekayaan bersih lebih besar dari usaha kecil (UU 20/2008).",
         characteristics: [
-            "Modal dan aset sudah cukup memadai",
-            "Omset dan laba bersih stabil",
-            "Memiliki karyawan 5-20 orang",
-            "Usia usaha sudah cukup matang",
-            "Memiliki sistem operasional yang baik"
+            "Aset > Rp5 miliar s.d. Rp10 miliar",
+            "Omzet > Rp15 miliar s.d. Rp50 miliar per tahun",
+            "Jumlah karyawan 20–99 orang",
+            "Memiliki manajemen formal dan sistem operasional stabil",
+            "Contoh: manufaktur skala menengah, distributor regional"
         ],
-        recommendation: "Fokus pada ekspansi pasar, diversifikasi produk, dan peningkatan efisiensi operasional."
+        recommendation: "Ekspansi pasar, inovasi produk, sertifikasi ISO, dan pertimbangkan go-public atau kemitraan strategis."
     }
 };
 
